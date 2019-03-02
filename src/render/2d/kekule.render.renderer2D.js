@@ -1605,6 +1605,20 @@ Kekule.Render.Ctab2DRenderer = Class.create(Kekule.Render.ChemObj2DRenderer,
 	/** @private */
 	CHILD_TRANSFORM_MATRIX_FIELD: '__$childTransMatrix__',
 
+	/**
+	 * Return true if one atom is H and the other is C.
+	 * @private
+	 */
+	isCarbonHydrogenConnector: function(connector) {
+		const atoms = connector.connectedObjs;
+		const atom1 = atoms[0];
+		const atom2 = atoms[1];
+		return (
+			atom1.atomicNumber === 1 && atom2.atomicNumber === 6 ||
+			atom1.atomicNumber === 6 && atom2.atomicNumber === 1
+		)
+	},
+
 	/** @private */
 	doEstimateSelfObjBox: function(context, options, allowCoordBorrow)
 	{
@@ -2162,6 +2176,11 @@ Kekule.Render.Ctab2DRenderer = Class.create(Kekule.Render.ChemObj2DRenderer,
 	 */
 	doDrawConnector: function(context, group, connector, parentChemObj, options, finalTransformOptions)
 	{
+		// Don't draw this connector if one atom is H and the other is C.
+		if (this.isCarbonHydrogenConnector(connector)) {
+			return null;
+		}
+
 		var result;
 		// draw lines between every two connected objects
 		//var objCount = connector.getConnectedObjCount();
@@ -2569,6 +2588,16 @@ Kekule.Render.ChemCtab2DRenderer = Class.create(Kekule.Render.Ctab2DRenderer,
 		//var richTextDrawOptions = Object.create(this.getRenderCache(context).richTextDrawOptions);
 
 		var atomicNumber = node.getAtomicNumber? node.getAtomicNumber(): 0;
+
+		// Don't draw this atom if it is H and connected atom is C.
+		if (atomicNumber === 1) {
+			// Hydrogen atom has exactly one connector
+			const connector = node.linkedConnectors[0];
+			if (this.isCarbonHydrogenConnector(connector)) {
+				return null;
+			}
+		}
+
 		var localOptions = node.getOverriddenRenderOptions() || {};
 		//var localColor = localOptions.atomColor || localOptions.color;
 		var localColor = localOptions.color || localOptions.atomColor;
