@@ -1,13 +1,6 @@
 export = Kekule
 
 declare namespace Kekule {
-  namespace HtmlElementUtils {
-    function getElemOffsetDimension(element: HTMLElement): Dimension;
-  }
-  interface Dimension {
-    width: number;
-    height: number;
-  }
   namespace ChemWidget {
     class Viewer {
       constructor(element: HTMLElement);
@@ -18,8 +11,15 @@ declare namespace Kekule {
       setEnableEdit(enable: boolean): void;
     }
   }
+  namespace HtmlElementUtils {
+    function getElemOffsetDimension(element: HTMLElement): Dimension;
+  }
   namespace IO {
     function loadMimeData(data: string, mimeType: string): Mol;
+  }
+  interface Dimension {
+    width: number;
+    height: number;
   }
   interface Mol {
   }
