@@ -1,8 +1,8 @@
 export = Kekule
 
 declare namespace Kekule {
-  interface HtmlElementUtils {
-    getElemOffsetDimension(element: HTMLElement): Dimension;
+  namespace HtmlElementUtils {
+    function getElemOffsetDimension(element: HTMLElement): Dimension;
   }
   interface Dimension {
     width: number;
@@ -18,8 +18,8 @@ declare namespace Kekule {
       setEnableEdit(enable: boolean): void;
     }
   }
-  interface IO {
-    loadMimeData(data: string, mimeType: string): Mol;
+  namespace IO {
+    function loadMimeData(data: string, mimeType: string): Mol;
   }
   interface Mol {
   }
