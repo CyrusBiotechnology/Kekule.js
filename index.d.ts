@@ -5,7 +5,7 @@ declare namespace Kekule {
     class Viewer {
       constructor(element: HTMLElement);
       setDimension(width: number, height: number): void;
-      setChemObj(mol: Mol): void;
+      setChemObj(mol: Mol | null): void;
       setEnableToolbar(enable: boolean): void;
       setEnableDirectInteraction(enable: boolean): void;
       setEnableEdit(enable: boolean): void;
