@@ -1610,9 +1610,9 @@ Kekule.Render.Ctab2DRenderer = Class.create(Kekule.Render.ChemObj2DRenderer,
 	 * @private
 	 */
 	isCarbonHydrogenConnector: function(connector) {
-		const atoms = connector.connectedObjs;
-		const atom1 = atoms[0];
-		const atom2 = atoms[1];
+		var atoms = connector.connectedObjs;
+		var atom1 = atoms[0];
+		var atom2 = atoms[1];
 		return (
 			atom1.atomicNumber === 1 && atom2.atomicNumber === 6 ||
 			atom1.atomicNumber === 6 && atom2.atomicNumber === 1
@@ -2592,7 +2592,7 @@ Kekule.Render.ChemCtab2DRenderer = Class.create(Kekule.Render.Ctab2DRenderer,
 		// Don't draw this atom if it is H and connected atom is C.
 		if (atomicNumber === 1) {
 			// Hydrogen atom has exactly one connector
-			const connector = node.linkedConnectors[0];
+			var connector = node.linkedConnectors[0];
 			if (this.isCarbonHydrogenConnector(connector)) {
 				return null;
 			}
