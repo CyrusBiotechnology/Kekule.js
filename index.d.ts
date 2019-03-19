@@ -4,11 +4,13 @@ declare namespace Kekule {
   namespace ChemWidget {
     class Viewer {
       constructor(element: HTMLElement);
-      setDimension(width: number, height: number): void;
+      getChemObj(): Mol | null;
+      setBackgroundColor(color: string): void;
       setChemObj(mol: Mol | null): void;
-      setEnableToolbar(enable: boolean): void;
+      setDimension(width: number, height: number): void;
       setEnableDirectInteraction(enable: boolean): void;
       setEnableEdit(enable: boolean): void;
+      setEnableToolbar(enable: boolean): void;
     }
   }
   namespace HtmlElementUtils {
@@ -22,5 +24,18 @@ declare namespace Kekule {
     height: number;
   }
   interface Mol {
+    beginUpdate(): void;
+    endUpdate(): void;
+    getChildAt(index: number): Atom | Bond;
+    getChildCount(): number;
+    setRenderOption(optionName: 'atomColor', optionValue: string): void;
+    setRenderOption(optionName: 'bondColor', optionValue: string): void;
+    setRenderOption(optionName: 'opacity', optionValue: number): void;
   }
+  interface MolNode {
+    setRenderOption(optionName: 'color', optionValue: string): void;
+    setRenderOption(optionName: 'customLabel', optionValue: string): void;
+  }
+  interface Atom extends MolNode {}
+  interface Bond extends MolNode {}
 }
